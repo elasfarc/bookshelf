@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+
+.close-button {
+  background-color: transparent;
+  border: none;
+  color: #61dafb;
+  position: relative;
+  top: -1rem;
+  right: -100%;
+}
