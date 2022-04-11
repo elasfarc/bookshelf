@@ -1,7 +1,8 @@
 import React from "react";
 import "./App.css";
 import { Logo } from "./components/logo";
-import { Dialog, DialogOverlay, DialogContent } from "@reach/dialog";
+import { Dialog } from "@reach/dialog";
+import Form from "./components/form";
 import "@reach/dialog/styles.css";
 const R = require("ramda");
 
@@ -11,6 +12,12 @@ function App() {
   const showRegisterModal = showModal === "register";
   const closeModal = R.compose(setShowModal, R.F);
 
+  const login = (formData) => {
+    console.log(formData);
+  };
+  const register = (formData) => {
+    console.log(formData);
+  };
   return (
     <>
       <Logo width="80" height="80" />
@@ -33,7 +40,7 @@ function App() {
         <button className="close-button" onClick={closeModal}>
           <span aria-hidden>×</span>
         </button>
-        Login
+        <Form formFor="login" onSubmit={login} />
       </Dialog>
       <Dialog
         aria-label="Register form"
@@ -43,7 +50,7 @@ function App() {
         <button className="close-button" onClick={closeModal}>
           <span aria-hidden>×</span>
         </button>
-        Register
+        <Form formFor="register" onSubmit={register} />
       </Dialog>
     </>
   );
