@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
-import { Input, Button } from "./lib";
+import { Input, Button, Spinner } from "./lib";
+
 function Form({ formFor, onSubmit }) {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -42,13 +43,14 @@ function Form({ formFor, onSubmit }) {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-      <div>
+      <div css={{ display: "flex", alignItems: "center", gap: "1rem" }}>
         <Button
           type="submit"
           variant={formFor === "login" ? "primary" : "secondary"}
         >
           {formFor}
         </Button>
+        <Spinner />
       </div>
     </form>
   );
