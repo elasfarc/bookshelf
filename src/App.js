@@ -1,9 +1,12 @@
+/** @jsxImportSource @emotion/react */
 import React from "react";
 import "./App.css";
 import { Logo } from "./components/logo";
-import { Dialog } from "@reach/dialog";
 import Form from "./components/form";
 import "@reach/dialog/styles.css";
+import "bootstrap/dist/css/bootstrap-reboot.css";
+import { Button, Dialog } from "./components/lib";
+
 const R = require("ramda");
 
 function App() {
@@ -19,18 +22,39 @@ function App() {
     console.log(formData);
   };
   return (
-    <>
+    <div
+      css={{
+        height: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
       <Logo width="80" height="80" />
       <h1>Bookshelf</h1>
-      <div>
-        <button onClick={R.compose(setShowModal, R.always("login"))}>
-          login
-        </button>
-      </div>
-      <div>
-        <button onClick={R.compose(setShowModal, R.always("register"))}>
-          register
-        </button>
+      <div
+        css={{
+          display: "flex",
+          gap: ".5rem",
+        }}
+      >
+        <div>
+          <Button
+            variant="primary"
+            onClick={R.compose(setShowModal, R.always("login"))}
+          >
+            login
+          </Button>
+        </div>
+        <div>
+          <Button
+            variant="secondary"
+            onClick={R.compose(setShowModal, R.always("register"))}
+          >
+            register
+          </Button>
+        </div>
       </div>
       <Dialog
         aria-label="Login form"
@@ -52,7 +76,7 @@ function App() {
         </button>
         <Form formFor="register" onSubmit={register} />
       </Dialog>
-    </>
+    </div>
   );
 }
 
