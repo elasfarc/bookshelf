@@ -9,6 +9,9 @@ import AuthenticatedApp from "./authenticated-app";
 function App() {
   const { user } = useUser();
 
+  console.log("render APP, session is ");
+  console.log(user);
+
   return user ? <AuthenticatedApp /> : <UnauthenticatedApp />;
 }
 

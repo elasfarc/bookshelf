@@ -23,11 +23,11 @@ function UserProvider({ children }) {
 }
 
 function useUser() {
-  const user = React.useContext(UserContext);
-  if (!user) {
+  const session = React.useContext(UserContext);
+  if (!session) {
     throw new Error("useUser must be used within a UserProvider");
   }
-  return user;
+  return session;
 }
 
 export { UserProvider, useUser };

@@ -4,6 +4,7 @@ import { Logo } from "./components/logo";
 import Form from "./components/form";
 import { Button, Dialog } from "./components/lib";
 import "@reach/dialog/styles.css";
+import { signIn, signUp } from "./firebase/auth";
 
 const R = require("ramda");
 
@@ -12,11 +13,26 @@ function UnauthenticatedApp() {
   const showLoginModal = showModal === "login";
   const showRegisterModal = showModal === "register";
   const closeModal = R.compose(setShowModal, R.F);
-  const login = (formData) => {
-    console.log(formData);
+
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const login = async (formData) => {
+    try {
+      setIsLoading(true);
+      await signIn(formData);
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
   };
-  const register = (formData) => {
-    console.log(formData);
+  const register = async (formData) => {
+    try {
+      setIsLoading(true);
+      await signUp(formData);
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
   };
   return (
     <div

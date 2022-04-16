@@ -3,11 +3,11 @@ import React from "react";
 import { Input, Button, Spinner } from "./lib";
 
 function Form({ formFor, onSubmit }) {
-  const [username, setUsername] = React.useState("");
+  const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ username, password });
+    onSubmit({ email, password });
   };
 
   return (
@@ -26,12 +26,13 @@ function Form({ formFor, onSubmit }) {
       }}
     >
       <div>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="email">Email</label>
         <Input
-          type="text"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          type="email"
+          id="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </div>
       <div>
@@ -39,6 +40,7 @@ function Form({ formFor, onSubmit }) {
         <Input
           type="password"
           id="password"
+          required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
