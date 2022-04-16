@@ -2,7 +2,7 @@
 import React from "react";
 import { Input, Button, Spinner } from "./lib";
 
-function Form({ formFor, onSubmit }) {
+function Form({ formFor, onSubmit, isLoading }) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const handleSubmit = (e) => {
@@ -52,7 +52,7 @@ function Form({ formFor, onSubmit }) {
         >
           {formFor}
         </Button>
-        <Spinner />
+        {isLoading ? <Spinner /> : null}
       </div>
     </form>
   );

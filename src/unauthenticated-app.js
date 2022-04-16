@@ -77,7 +77,7 @@ function UnauthenticatedApp() {
         <button className="close-button" onClick={closeModal}>
           <span aria-hidden>×</span>
         </button>
-        <Form formFor="login" onSubmit={login} />
+        <Form formFor="login" onSubmit={login} isLoading={isLoading} />
       </Dialog>
       <Dialog
         aria-label="Register form"
@@ -87,7 +87,7 @@ function UnauthenticatedApp() {
         <button className="close-button" onClick={closeModal}>
           <span aria-hidden>×</span>
         </button>
-        <Form formFor="register" onSubmit={register} />
+        <Form formFor="register" onSubmit={register} isLoading={isLoading} />
       </Dialog>
     </div>
   );
