@@ -1,10 +1,11 @@
 import React from "react";
 import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
 
 const UserContext = React.createContext();
 
 function UserProvider({ children }) {
-  const [{ user, isLoading }, setSession] = React.useState({
+  const [session, setSession] = React.useState({
     user: null,
     isLoading: true,
   });
@@ -16,7 +17,9 @@ function UserProvider({ children }) {
     return () => unsubscribe();
   }, []);
 
-  return isLoading ? null : <UserContext.Provider value={user} {...children} />;
+  return session.isLoading ? null : (
+    <UserContext.Provider value={session} children={children} />
+  );
 }
 
 function useUser() {
