@@ -6,6 +6,7 @@ import Form from "./components/form";
 import "@reach/dialog/styles.css";
 import "bootstrap/dist/css/bootstrap-reboot.css";
 import { Button, Dialog } from "./components/lib";
+import "./firebase/config.js";
 
 const R = require("ramda");
 
