@@ -67,7 +67,7 @@ function Book() {
             <div css={{ flex: 1, justifyContent: "space-between" }}>
               <h1>{title}</h1>
               <div>
-                {authors.map((author, index) => (
+                {authors?.map((author, index) => (
                   <i key={index}>{author}</i>
                 ))}
                 <span css={{ marginRight: 6, marginLeft: 6 }}>|</span>

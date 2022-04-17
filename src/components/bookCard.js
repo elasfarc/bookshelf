@@ -32,7 +32,7 @@ export default function BookCard({
       <StyledAction>
         <Button
           overrides={{ BaseButton: { style: { width: "100%" } } }}
-          onClick={() => navigate(`book/${id}`)}
+          onClick={() => navigate(`/book/${id}`)}
         >
           Button Label
         </Button>

@@ -7,6 +7,7 @@ import Header from "./components/header";
 import { Routes, Route } from "react-router-dom";
 import SideNavigation from "./components/side-navigation";
 import Book from "./pages/book";
+import NotFound from "./pages/404";
 
 import { useNavigate } from "react-router-dom";
 import React from "react";
@@ -29,7 +30,8 @@ function AuthenticatedApp() {
           <Routes>
             <Route index path="/" element={<Home />} />
             <Route path="/discover" element={<DiscoverBooks />} />
-            <Route exact path="/book/:id" element={<Book />} />
+            <Route path="/book/:id" element={<Book />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </BaseProvider>
