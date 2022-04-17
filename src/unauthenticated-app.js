@@ -5,6 +5,7 @@ import Form from "./components/form";
 import { Button, Dialog } from "./components/lib";
 import "@reach/dialog/styles.css";
 import { signIn, signUp } from "./firebase/auth";
+import { useAsync } from "./util/hooks";
 
 const R = require("ramda");
 
@@ -14,26 +15,10 @@ function UnauthenticatedApp() {
   const showRegisterModal = showModal === "register";
   const closeModal = R.compose(setShowModal, R.F);
 
-  const [isLoading, setIsLoading] = React.useState(false);
+  const { run, error, isLoading } = useAsync();
+  const login = R.compose(run, signIn);
+  const register = R.compose(run, signUp);
 
-  const login = async (formData) => {
-    try {
-      setIsLoading(true);
-      await signIn(formData);
-    } catch (error) {
-      console.log(error);
-    }
-    setIsLoading(false);
-  };
-  const register = async (formData) => {
-    try {
-      setIsLoading(true);
-      await signUp(formData);
-    } catch (error) {
-      console.log(error);
-    }
-    setIsLoading(false);
-  };
   return (
     <div
       css={{
@@ -77,7 +62,12 @@ function UnauthenticatedApp() {
         <button className="close-button" onClick={closeModal}>
           <span aria-hidden>×</span>
         </button>
-        <Form formFor="login" onSubmit={login} isLoading={isLoading} />
+        <Form
+          formFor="login"
+          onSubmit={login}
+          isLoading={isLoading}
+          isError={error}
+        />
       </Dialog>
       <Dialog
         aria-label="Register form"
@@ -87,7 +77,12 @@ function UnauthenticatedApp() {
         <button className="close-button" onClick={closeModal}>
           <span aria-hidden>×</span>
         </button>
-        <Form formFor="register" onSubmit={register} isLoading={isLoading} />
+        <Form
+          formFor="register"
+          onSubmit={register}
+          isLoading={isLoading}
+          isError={error}
+        />
       </Dialog>
     </div>
   );

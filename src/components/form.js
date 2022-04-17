@@ -1,8 +1,9 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { Input, Button, Spinner } from "./lib";
+import * as Colors from "../styles/colors";
 
-function Form({ formFor, onSubmit, isLoading }) {
+function Form({ formFor, onSubmit, isLoading, isError }) {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const handleSubmit = (e) => {
@@ -54,6 +55,11 @@ function Form({ formFor, onSubmit, isLoading }) {
         </Button>
         {isLoading ? <Spinner /> : null}
       </div>
+      {isError ? (
+        <div>
+          <pre css={{ color: Colors.danger }}>try again...</pre>
+        </div>
+      ) : null}
     </form>
   );
 }
