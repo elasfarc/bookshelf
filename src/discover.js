@@ -34,7 +34,7 @@ function DiscoverBooks() {
   return (
     <div
       css={{
-        padding: "3rem 0",
+        padding: "2rem 0",
         margin: "auto",
         width: "90%",
         maxWidth: "1000px",
