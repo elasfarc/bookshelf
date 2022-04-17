@@ -1,13 +1,14 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { Input, Button, Spinner } from "./lib";
+import * as Colors from "../styles/colors";
 
-function Form({ formFor, onSubmit }) {
-  const [username, setUsername] = React.useState("");
+function Form({ formFor, onSubmit, isLoading, isError }) {
+  const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ username, password });
+    onSubmit({ email, password });
   };
 
   return (
@@ -26,12 +27,13 @@ function Form({ formFor, onSubmit }) {
       }}
     >
       <div>
-        <label htmlFor="username">Username</label>
+        <label htmlFor="email">Email</label>
         <Input
-          type="text"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          type="email"
+          id="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
       </div>
       <div>
@@ -39,6 +41,7 @@ function Form({ formFor, onSubmit }) {
         <Input
           type="password"
           id="password"
+          required
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
@@ -50,8 +53,13 @@ function Form({ formFor, onSubmit }) {
         >
           {formFor}
         </Button>
-        <Spinner />
+        {isLoading ? <Spinner /> : null}
       </div>
+      {isError ? (
+        <div>
+          <pre css={{ color: Colors.danger }}>try again...</pre>
+        </div>
+      ) : null}
     </form>
   );
 }

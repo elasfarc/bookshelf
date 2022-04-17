@@ -1,13 +1,16 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-// import App from './App';
-import DiscoverBooks from "./discover";
+import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import { UserProvider } from "./context/userContext";
+import "./firebase/config.js";
 
 ReactDOM.render(
   <React.StrictMode>
-    <DiscoverBooks />
+    <UserProvider>
+      <App />
+    </UserProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );
