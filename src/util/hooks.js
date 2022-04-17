@@ -4,6 +4,7 @@ const actionTypes = {
   PENDING: "pending",
   RESOLVED: "resolved",
   REJECTED: "rejected",
+  IDLE: "idle",
 };
 
 function stateReducer(state, { type, data, error }) {
@@ -46,7 +47,7 @@ function useAsync(initState = {}) {
     {
       data: null,
       error: null,
-      status: "idle",
+      status: actionTypes.IDLE,
       ...initState,
     }
   );
@@ -67,8 +68,9 @@ function useAsync(initState = {}) {
   const isLoading = status === actionTypes.PENDING;
   const isSuccess = status === actionTypes.RESOLVED;
   const isError = status === actionTypes.REJECTED;
+  const isIdle = status === actionTypes.IDLE;
 
-  return { run, data, error, isLoading, isError, isSuccess };
+  return { run, data, error, isIdle, isLoading, isError, isSuccess };
 }
 
 export { useAsync };

@@ -35,12 +35,13 @@ function DiscoverBooks() {
     <div
       css={{
         padding: "2rem 0",
-        margin: "auto",
         width: "90%",
-        maxWidth: "1000px",
       }}
     >
-      <form onSubmit={handleSearchSubmit}>
+      <form
+        onSubmit={handleSearchSubmit}
+        css={{ position: "relative", maxWidth: "800px", margin: "auto" }}
+      >
         <Input placeholder="Search books..." id="search" />
         <Tooltip label="search books">
           <button
@@ -48,9 +49,10 @@ function DiscoverBooks() {
             css={{
               border: "none",
               background: "transparent",
-              position: "relative",
+              position: "absolute",
               left: "97%",
-              top: "-1.75rem",
+              top: "50%",
+              transform: "translateY(-50%)",
             }}
           >
             {isError ? (

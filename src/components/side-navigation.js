@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 const nav = [
   {
     title: "Discover",
-    itemId: "/",
+    itemId: "/discover",
   },
 ];
 export default function SideNavigation() {
   const navigate = useNavigate();
-  const [location, setLocation] = useState("/");
+  const [location, setLocation] = useState("/discover");
   return (
     <Navigation
       items={nav}
@@ -18,7 +18,7 @@ export default function SideNavigation() {
       onChange={({ event, item }) => {
         event.preventDefault();
         setLocation(item.itemId);
-        navigate("/");
+        navigate("/discover");
       }}
       overrides={{
         Root: {
