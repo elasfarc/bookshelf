@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { Navigation } from "baseui/side-navigation";
 import { useNavigate } from "react-router-dom";
 
@@ -7,18 +6,25 @@ const nav = [
     title: "Discover",
     itemId: "/discover",
   },
+  {
+    title: "Reading List",
+    itemId: "/list",
+  },
+  {
+    title: "Finished Books",
+    itemId: "/finished",
+  },
 ];
-export default function SideNavigation() {
+export default function SideNavigation({ active }) {
   const navigate = useNavigate();
-  const [location, setLocation] = useState("/discover");
+
   return (
     <Navigation
       items={nav}
-      activeItemId={location}
+      activeItemId={active}
       onChange={({ event, item }) => {
         event.preventDefault();
-        setLocation(item.itemId);
-        navigate("/discover");
+        navigate(item.itemId);
       }}
       overrides={{
         Root: {

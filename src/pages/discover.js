@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
-import { Input, Spinner } from "./components/lib";
+import { Input, Spinner } from "../components/lib";
 import { FaSearch, FaTimes } from "react-icons/fa";
 import Tooltip from "@reach/tooltip";
 import "@reach/tooltip/styles.css";
-import { client } from "./util/client-api";
-import BookList from "./components/book-list";
-import * as Colors from "./styles/colors";
-import { useAsync } from "./util/hooks";
+import { client } from "../util/client-api";
+import BookList from "../components/book-list";
+import * as Colors from "../styles/colors";
+import { useAsync } from "../util/hooks";
 
 const R = require("ramda");
 
