@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
-import { Input, Spinner } from "./components/lib";
+import { Input, Spinner } from "../components/lib";
 import { FaSearch, FaTimes } from "react-icons/fa";
 import Tooltip from "@reach/tooltip";
 import "@reach/tooltip/styles.css";
-import { client } from "./util/client-api";
-import BookList from "./components/book-list";
-import * as Colors from "./styles/colors";
-import { useAsync } from "./util/hooks";
+import { client } from "../util/client-api";
+import BookList from "../components/book-list";
+import * as Colors from "../styles/colors";
+import { useAsync } from "../util/hooks";
 
 const R = require("ramda");
 
@@ -34,13 +34,14 @@ function DiscoverBooks() {
   return (
     <div
       css={{
-        padding: "3rem 0",
-        margin: "auto",
+        padding: "2rem 0",
         width: "90%",
-        maxWidth: "1000px",
       }}
     >
-      <form onSubmit={handleSearchSubmit}>
+      <form
+        onSubmit={handleSearchSubmit}
+        css={{ position: "relative", maxWidth: "800px", margin: "auto" }}
+      >
         <Input placeholder="Search books..." id="search" />
         <Tooltip label="search books">
           <button
@@ -48,9 +49,10 @@ function DiscoverBooks() {
             css={{
               border: "none",
               background: "transparent",
-              position: "relative",
+              position: "absolute",
               left: "97%",
-              top: "-1.75rem",
+              top: "50%",
+              transform: "translateY(-50%)",
             }}
           >
             {isError ? (
