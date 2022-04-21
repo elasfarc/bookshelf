@@ -1,4 +1,5 @@
 import { auth } from "./config";
+import { createUserDocument } from "./user";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -6,9 +7,10 @@ import {
 } from "firebase/auth";
 
 async function signUp({ email, password, firstName, lastName }) {
-  return createUserWithEmailAndPassword(auth, email, password).then(
-    (res) => res.user
-  );
+  const { user } = await createUserWithEmailAndPassword(auth, email, password);
+  //await newUser.updateProfile({ displayName: `${firstName} ${lastName}` });
+  await createUserDocument(user);
+  return user;
 }
 function signIn({ email, password }) {
   return signInWithEmailAndPassword(auth, email, password).then(
