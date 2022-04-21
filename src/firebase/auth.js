@@ -1,19 +1,23 @@
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
+import { auth } from "./config";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut as fbSignOut,
+} from "firebase/auth";
 
 async function signUp({ email, password, firstName, lastName }) {
-  return await firebase.auth().createUserWithEmailAndPassword(email, password)
-    .user;
+  return createUserWithEmailAndPassword(auth, email, password).then(
+    (res) => res.user
+  );
 }
 function signIn({ email, password }) {
-  return firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then(({ user }) => user);
+  return signInWithEmailAndPassword(auth, email, password).then(
+    ({ user }) => user
+  );
 }
 
 function signOut() {
-  return firebase.auth().signOut();
+  return fbSignOut(auth);
 }
 
 export { signUp, signIn, signOut };
