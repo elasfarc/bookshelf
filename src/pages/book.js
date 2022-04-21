@@ -1,8 +1,10 @@
+/** @jsxImportSource @emotion/react */
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useAsync } from "../util/hooks";
 import { client } from "../util/client-api";
 import * as mq from "../styles/media-queries";
+import StatusButtons from "../components/status-button";
 
 const R = require("ramda");
 
@@ -51,10 +53,6 @@ function Book() {
           gridTemplateColumns: "1fr 2fr",
           gridGap: "2em",
           marginBottom: "1em",
-          [mq.small]: {
-            display: "flex",
-            flexDirection: "column",
-          },
         }}
       >
         <img
@@ -63,7 +61,7 @@ function Book() {
           css={{ width: "100%", maxWidth: "14rem" }}
         />
         <div>
-          <div css={{ display: "flex", position: "relative" }}>
+          <div css={{ display: "flex" }}>
             <div css={{ flex: 1, justifyContent: "space-between" }}>
               <h1>{title}</h1>
               <div>
@@ -74,6 +72,7 @@ function Book() {
                 <i>{publisher}</i>
               </div>
             </div>
+            <StatusButtons />
           </div>
           <br />
           <p>{description}</p>
