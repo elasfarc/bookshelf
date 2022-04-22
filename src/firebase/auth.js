@@ -1,5 +1,6 @@
 import { auth } from "./config";
 import { createUserDocument } from "./user";
+import { userListDoc } from "./list";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -10,6 +11,7 @@ async function signUp({ email, password, firstName, lastName }) {
   const { user } = await createUserWithEmailAndPassword(auth, email, password);
   //await newUser.updateProfile({ displayName: `${firstName} ${lastName}` });
   await createUserDocument(user);
+  await userListDoc(user).create();
   return user;
 }
 function signIn({ email, password }) {
