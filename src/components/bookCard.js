@@ -8,7 +8,7 @@ const PREVIEW_DESC_LENGTH = 205;
 
 export default function BookCard({
   bookData: {
-    id,
+    id: bookId,
     title,
     subtitle,
     authors,
@@ -35,13 +35,13 @@ export default function BookCard({
             overrides={{
               BaseButton: { style: { width: "90%" } },
             }}
-            onClick={() => navigate(`/book/${id}`)}
+            onClick={() => navigate(`/book/${bookId}`)}
           >
             Read more...
           </Button>
         </StyledAction>
       </Card>
-      <StatusButtons />
+      <StatusButtons book={{ bookId }} />
     </div>
   );
 }

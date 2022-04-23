@@ -10,7 +10,15 @@ import {
 
 function userListDoc(user) {
   const docRef = doc(db, `/lists/${user.uid}`);
-  return { create, get, update, addItem, removeItem };
+  return {
+    create,
+    get,
+    update,
+    addItem,
+    removeItem,
+    addItemProp,
+    removeItemProp,
+  };
   //***/
   function create() {
     return setDoc(docRef, {});
@@ -27,6 +35,14 @@ function userListDoc(user) {
   }
   function removeItem(itemId) {
     return update({ [itemId]: deleteField() });
+  }
+  function addItemProp({ itemId, prop, value = true }) {
+    return update({
+      [`${itemId}.${prop}`]: value === "NOW" ? serverTimestamp() : value,
+    });
+  }
+  function removeItemProp({ itemId, prop }) {
+    return update({ [`${itemId}.${prop}`]: deleteField() });
   }
 }
 

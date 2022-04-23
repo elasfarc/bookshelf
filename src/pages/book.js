@@ -72,7 +72,7 @@ function Book() {
                 <i>{publisher}</i>
               </div>
             </div>
-            <StatusButtons />
+            <StatusButtons book={{ bookId }} />
           </div>
           <br />
           <p>{description}</p>
