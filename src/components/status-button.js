@@ -12,9 +12,8 @@ import {
 import { Spinner, CircleButton } from "./lib";
 import * as colors from "../styles/colors";
 
-import { useUser } from "../context/userContext";
+import useUserList from "../util/react-query/user-list";
 import { useAsync } from "../util/hooks";
-import { userListDoc } from "../firebase/list";
 const R = require("ramda");
 
 function TooltipButton({ icon: Icon, label, highlight, onClick }) {
@@ -45,32 +44,17 @@ function TooltipButton({ icon: Icon, label, highlight, onClick }) {
   );
 }
 function StatusButtons({ book: { bookId } }) {
-  const { user } = useUser();
   const {
-    run,
-    data: userListSnap,
-    error,
+    userList,
     isIdle,
     isLoading,
     isError,
-    isSuccess,
-  } = useAsync();
-  const userList = userListSnap?.data();
-  const markAsRead = () =>
-    userListDoc(user).addItemProp({
-      itemId: bookId,
-      prop: "finished",
-      value: "NOW",
-    });
-  const unmarkAsRead = () =>
-    userListDoc(user).removeItemProp({
-      itemId: bookId,
-      prop: "finished",
-    });
-
-  React.useEffect(() => {
-    run(userListDoc(user).get());
-  }, [run, user]);
+    error,
+    addToList,
+    removeFromList,
+    markAsRead,
+    unmarkAsRead,
+  } = useUserList();
 
   if (isLoading || isIdle) return null;
   if (isError) return <h6>Error ......</h6>;
@@ -91,14 +75,14 @@ function StatusButtons({ book: { bookId } }) {
             label="Unmark as read"
             icon={FaBook}
             highlight={colors.yellow}
-            onClick={unmarkAsRead}
+            onClick={() => unmarkAsRead(bookId)}
           />
         ) : (
           <TooltipButton
             label="Mark as read"
             icon={FaCheckCircle}
             highlight={colors.success}
-            onClick={markAsRead}
+            onClick={() => markAsRead(bookId)}
           />
         )
       ) : null}
@@ -108,14 +92,14 @@ function StatusButtons({ book: { bookId } }) {
           label="Remove from list"
           icon={FaMinusCircle}
           highlight={colors.danger}
-          onClick={() => userListDoc(user).removeItem(bookId)}
+          onClick={() => removeFromList(bookId)}
         />
       ) : (
         <TooltipButton
           label="Add to list"
           icon={FaPlusCircle}
           highlight={colors.indigo}
-          onClick={() => userListDoc(user).addItem(bookId)}
+          onClick={() => addToList(bookId)}
         />
       )}
     </div>

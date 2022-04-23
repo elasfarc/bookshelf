@@ -23,9 +23,10 @@ function userListDoc(user) {
   function create() {
     return setDoc(docRef, {});
   }
-  function get() {
-    return getDoc(docRef);
-    //TODO still need to call .data() when promise resloved
+  async function get() {
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) return docSnap.data();
+    else return Promise.reject(`No such document! check ${docRef}`);
   }
   function update(data) {
     return updateDoc(docRef, data);
