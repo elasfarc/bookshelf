@@ -12,7 +12,7 @@ import {
 import { Spinner, CircleButton } from "./lib";
 import * as colors from "../styles/colors";
 
-import useUserList from "../util/react-query/user-list";
+import { useUserList } from "../util/react-query/user-list";
 import { useAsync } from "../util/hooks";
 const R = require("ramda");
 

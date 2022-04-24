@@ -1,3 +1,4 @@
+import React from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useUser } from "../../context/userContext";
 import { userListDoc } from "../../firebase/list";
@@ -64,4 +65,14 @@ function useUserList() {
   };
 }
 
-export default useUserList;
+function usePrefetchUserList() {
+  const { user } = useUser();
+  const { get: getList } = userListDoc(user);
+  const queryClient = useQueryClient();
+
+  (async () => {
+    await queryClient.prefetchQuery(["user-list", user.uid], getList);
+  })();
+}
+
+export { useUserList, usePrefetchUserList };
