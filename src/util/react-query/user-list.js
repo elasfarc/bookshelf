@@ -1,10 +1,8 @@
-import { useQuery } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useUser } from "../../context/userContext";
 import { userListDoc } from "../../firebase/list";
 
 const R = require("ramda");
-
-// const getData = R.invoker(0, "data");
 
 function useUserList() {
   const {
@@ -14,11 +12,18 @@ function useUserList() {
 
   const {
     get: getList,
-    addItem: addToList,
-    removeItem: removeFromList,
+    addItem,
+    removeItem,
     addItemProp,
     removeItemProp,
   } = userListDoc(user);
+
+  const queryClient = useQueryClient();
+
+  const invalidateUserList = R.compose(
+    R.invoker(1, "invalidateQueries")(["user-list", uid]),
+    R.always(queryClient)
+  );
 
   const {
     data: userList,
@@ -28,18 +33,23 @@ function useUserList() {
     error,
   } = useQuery(["user-list", uid], getList);
 
-  const markAsRead = (bookId) =>
-    addItemProp({
-      itemId: bookId,
-      prop: "finished",
-      value: "NOW",
-    });
+  const addToList = useMutation(addItem, {
+    onSuccess: invalidateUserList,
+  });
 
-  const unmarkAsRead = (bookId) =>
-    removeItemProp({
-      itemId: bookId,
-      prop: "finished",
-    });
+  const removeFromList = useMutation(removeItem, {
+    onSuccess: invalidateUserList,
+  });
+
+  const markAsRead = useMutation(
+    (bookId) => addItemProp({ itemId: bookId, prop: "finished", value: "NOW" }),
+    { onSuccess: invalidateUserList }
+  );
+
+  const unmarkAsRead = useMutation(
+    (bookId) => removeItemProp({ itemId: bookId, prop: "finished" }),
+    { onSuccess: invalidateUserList }
+  );
 
   return {
     userList,

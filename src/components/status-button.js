@@ -75,14 +75,14 @@ function StatusButtons({ book: { bookId } }) {
             label="Unmark as read"
             icon={FaBook}
             highlight={colors.yellow}
-            onClick={() => unmarkAsRead(bookId)}
+            onClick={() => unmarkAsRead.mutateAsync(bookId)}
           />
         ) : (
           <TooltipButton
             label="Mark as read"
             icon={FaCheckCircle}
             highlight={colors.success}
-            onClick={() => markAsRead(bookId)}
+            onClick={() => markAsRead.mutateAsync(bookId)}
           />
         )
       ) : null}
@@ -92,14 +92,14 @@ function StatusButtons({ book: { bookId } }) {
           label="Remove from list"
           icon={FaMinusCircle}
           highlight={colors.danger}
-          onClick={() => removeFromList(bookId)}
+          onClick={() => removeFromList.mutateAsync(bookId)}
         />
       ) : (
         <TooltipButton
           label="Add to list"
           icon={FaPlusCircle}
           highlight={colors.indigo}
-          onClick={() => addToList(bookId)}
+          onClick={() => addToList.mutateAsync(bookId)}
         />
       )}
     </div>
