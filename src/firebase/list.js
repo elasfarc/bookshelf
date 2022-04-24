@@ -31,8 +31,10 @@ function userListDoc(user) {
   function update(data) {
     return updateDoc(docRef, data);
   }
-  function addItem(itemId) {
-    return update({ [itemId]: { itemId, added: serverTimestamp() } });
+  function addItem({ itemId, itemData }) {
+    return update({
+      [itemId]: { itemId, added: serverTimestamp(), ...itemData },
+    });
   }
   function removeItem(itemId) {
     return update({ [itemId]: deleteField() });

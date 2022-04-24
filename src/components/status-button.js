@@ -43,7 +43,7 @@ function TooltipButton({ icon: Icon, label, highlight, onClick }) {
     </Tooltip>
   );
 }
-function StatusButtons({ book: { bookId } }) {
+function StatusButtons({ bookData: { id: bookId, ...rest } }) {
   const {
     userList,
     isIdle,
@@ -99,7 +99,9 @@ function StatusButtons({ book: { bookId } }) {
           label="Add to list"
           icon={FaPlusCircle}
           highlight={colors.indigo}
-          onClick={() => addToList.mutateAsync(bookId)}
+          onClick={() =>
+            addToList.mutateAsync({ itemId: bookId, itemData: { ...rest } })
+          }
         />
       )}
     </div>

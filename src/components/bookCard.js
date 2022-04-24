@@ -6,8 +6,8 @@ import StatusButtons from "./status-button";
 
 const PREVIEW_DESC_LENGTH = 205;
 
-export default function BookCard({
-  bookData: {
+export default function BookCard({ bookData } = {}) {
+  const {
     id: bookId,
     title,
     subtitle,
@@ -18,9 +18,10 @@ export default function BookCard({
     categories,
     description,
     imageLinks: { thumbnail, smallThumbnail },
-  },
-}) {
+  } = bookData;
+
   const navigate = useNavigate();
+
   return (
     <div style={{ display: "flex", gap: "10px" }}>
       <Card title={title}>
@@ -41,7 +42,7 @@ export default function BookCard({
           </Button>
         </StyledAction>
       </Card>
-      <StatusButtons book={{ bookId }} />
+      <StatusButtons bookData={bookData} />
     </div>
   );
 }
