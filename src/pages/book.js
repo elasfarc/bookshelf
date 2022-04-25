@@ -1,46 +1,40 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useAsync } from "../util/hooks";
 import { client } from "../util/client-api";
 import * as mq from "../styles/media-queries";
 import StatusButtons from "../components/status-button";
+import { useQuery } from "react-query";
 
 const R = require("ramda");
 
-function Loading({ name }) {
+function Loading() {
   return (
-    <>
-      <h6>Loading {name}</h6>
+    <div css={{ width: "100%", display: "flex", justifyContent: "center" }}>
       <img
         src="https://media.giphy.com/media/3oEjI6SIIHBdRxXI40/giphy.gif"
         alt="spinner"
       />
-    </>
+    </div>
   );
 }
 
 function Book() {
   const { id: bookId } = useParams();
-  const { run, data, error, isIdle, isLoading, isError } = useAsync();
+  const { data, error, isIdle, isLoading, isError } = useQuery(
+    ["book-search", bookId],
+    () => client(bookId, { multiple: false })
+  );
 
-  React.useEffect(() => {
-    R.compose(run, client, R.concat("q="), encodeURIComponent)(bookId);
-  }, [bookId, run]);
-
-  if (isLoading || isIdle) return <Loading name="book" />;
+  if (isLoading || isIdle) return <Loading />;
   const {
-    items: [
-      {
-        volumeInfo: {
-          title,
-          publisher,
-          description,
-          imageLinks: { thumbnail: coverImageUrl },
-          authors,
-        },
-      },
-    ],
+    volumeInfo: {
+      title,
+      publisher,
+      description,
+      imageLinks: { thumbnail: coverImageUrl },
+      authors,
+    },
   } = data;
 
   return isError ? (
@@ -72,7 +66,7 @@ function Book() {
                 <i>{publisher}</i>
               </div>
             </div>
-            <StatusButtons book={{ bookId }} />
+            <StatusButtons bookData={{ id: bookId }} />
           </div>
           <br />
           <p>{description}</p>
