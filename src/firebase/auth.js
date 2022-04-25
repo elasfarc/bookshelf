@@ -1,19 +1,27 @@
-import firebase from "firebase/compat/app";
-import "firebase/compat/auth";
+import { auth } from "./config";
+import { createUserDocument } from "./user";
+import { userListDoc } from "./list";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut as fbSignOut,
+} from "firebase/auth";
 
 async function signUp({ email, password, firstName, lastName }) {
-  return await firebase.auth().createUserWithEmailAndPassword(email, password)
-    .user;
+  const { user } = await createUserWithEmailAndPassword(auth, email, password);
+  //await newUser.updateProfile({ displayName: `${firstName} ${lastName}` });
+  await createUserDocument(user);
+  await userListDoc(user).create();
+  return user;
 }
 function signIn({ email, password }) {
-  return firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then(({ user }) => user);
+  return signInWithEmailAndPassword(auth, email, password).then(
+    ({ user }) => user
+  );
 }
 
 function signOut() {
-  return firebase.auth().signOut();
+  return fbSignOut(auth);
 }
 
 export { signUp, signIn, signOut };

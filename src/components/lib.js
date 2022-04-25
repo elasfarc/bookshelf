@@ -34,6 +34,17 @@ const Dialog = styled(ReachDialog)({
   },
 });
 
+const CircleButton = styled.button({
+  borderRadius: "30px",
+  padding: "0",
+  width: "40px",
+  height: "40px",
+  border: `1px solid ${colors.gray10}`,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
 const spin = keyframes({
   "0%": { transform: "rotate(0deg)" },
   "100%": { transform: "rotate(360deg)" },
@@ -46,4 +57,4 @@ Spinner.defaultProps = {
   "aria-label": "loading",
 };
 
-export { Input, Button, Dialog, Spinner };
+export { Input, Button, Dialog, Spinner, CircleButton };

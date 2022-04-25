@@ -13,6 +13,7 @@ import FinishedScreen from "./pages/finished";
 
 import { useNavigate, useLocation } from "react-router-dom";
 import React from "react";
+import { usePrefetchUserList } from "./util/react-query/user-list";
 
 const engine = new Styletron();
 
@@ -24,6 +25,8 @@ function Home() {
 }
 function AuthenticatedApp() {
   const { pathname: currentLocation } = useLocation();
+  usePrefetchUserList();
+
   return (
     <StyletronProvider value={engine}>
       <BaseProvider theme={LightTheme}>
