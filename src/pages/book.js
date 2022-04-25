@@ -5,6 +5,8 @@ import { client } from "../util/client-api";
 import * as mq from "../styles/media-queries";
 import StatusButtons from "../components/status-button";
 import { useQuery } from "react-query";
+import Rating from "../components/rating";
+import { useUserList } from "../util/react-query/user-list";
 
 const R = require("ramda");
 
@@ -25,6 +27,8 @@ function Book() {
     ["book-search", bookId],
     () => client(bookId, { multiple: false })
   );
+  const { userList } = useUserList();
+  const bookIsFinished = userList[bookId]?.finished;
 
   if (isLoading || isIdle) return <Loading />;
   const {
@@ -65,6 +69,7 @@ function Book() {
                 <span css={{ marginRight: 6, marginLeft: 6 }}>|</span>
                 <i>{publisher}</i>
               </div>
+              {bookIsFinished && <Rating />}
             </div>
             <StatusButtons bookData={{ id: bookId }} />
           </div>
