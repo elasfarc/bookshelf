@@ -31,7 +31,7 @@ export default function BookCard({ bookData } = {}) {
     <div style={{ display: "flex", gap: "10px" }}>
       <Card title={title}>
         <StyledThumbnail src={thumbnail} />
-        {bookIsFinished && <Rating />}
+        {bookIsFinished && <Rating book={{ bookId }} />}
         <StyledBody>
           {description?.length > PREVIEW_DESC_LENGTH
             ? `${description.substring(0, 205)}...`

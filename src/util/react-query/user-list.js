@@ -52,6 +52,12 @@ function useUserList() {
     { onSuccess: invalidateUserList }
   );
 
+  const updateRating = useMutation(
+    ({ bookId, rate }) =>
+      addItemProp({ itemId: bookId, prop: "rating", value: rate }),
+    { onSuccess: invalidateUserList }
+  );
+
   return {
     userList,
     isIdle,
@@ -62,6 +68,7 @@ function useUserList() {
     removeFromList,
     markAsRead,
     unmarkAsRead,
+    updateRating,
   };
 }
 

@@ -23,14 +23,20 @@ function Loading() {
 
 function Book() {
   const { id: bookId } = useParams();
-  const { data, error, isIdle, isLoading, isError } = useQuery(
-    ["book-search", bookId],
-    () => client(bookId, { multiple: false })
+  const {
+    data,
+    error,
+    isIdle,
+    isLoading: isBookFetchLoading,
+    isError,
+  } = useQuery(["book-search", bookId], () =>
+    client(bookId, { multiple: false })
   );
-  const { userList } = useUserList();
-  const bookIsFinished = userList[bookId]?.finished;
 
-  if (isLoading || isIdle) return <Loading />;
+  const { userList, isLoading: isUserListLoading } = useUserList();
+
+  if (isIdle || isBookFetchLoading || isUserListLoading) return <Loading />;
+  const bookIsFinished = userList[bookId]?.finished;
   const {
     volumeInfo: {
       title,
@@ -69,7 +75,7 @@ function Book() {
                 <span css={{ marginRight: 6, marginLeft: 6 }}>|</span>
                 <i>{publisher}</i>
               </div>
-              {bookIsFinished && <Rating />}
+              {bookIsFinished && <Rating book={{ bookId }} />}
             </div>
             <StatusButtons bookData={{ id: bookId }} />
           </div>
