@@ -7,8 +7,7 @@ import StatusButtons from "../components/status-button";
 import { useQuery } from "react-query";
 import Rating from "../components/rating";
 import { useUserList } from "../util/react-query/user-list";
-
-const R = require("ramda");
+import ErrorScreen from "./error/error";
 
 function Loading() {
   return (
@@ -36,6 +35,8 @@ function Book() {
   const { userList, isLoading: isUserListLoading } = useUserList();
 
   if (isIdle || isBookFetchLoading || isUserListLoading) return <Loading />;
+  if (isError) return <ErrorScreen error={error.error} />;
+
   const bookIsFinished = userList[bookId]?.finished;
   const {
     volumeInfo: {
@@ -46,10 +47,7 @@ function Book() {
       authors,
     },
   } = data;
-
-  return isError ? (
-    `${error.message}`
-  ) : (
+  return (
     <div>
       <div
         css={{
