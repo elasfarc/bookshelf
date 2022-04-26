@@ -35,7 +35,6 @@ function Book() {
   const { userList, isLoading: isUserListLoading } = useUserList();
 
   if (isIdle || isBookFetchLoading || isUserListLoading) return <Loading />;
-  if (isError) return <ErrorScreen error={error.error} />;
 
   const bookIsFinished = userList[bookId]?.finished;
   const {

@@ -2,7 +2,7 @@
 import errorImg from "./cherry.png";
 import { Link } from "react-router-dom";
 
-function ErrorScreen({ error }) {
+function ErrorScreen({ error, resetErrorBoundary }) {
   return (
     <div
       css={{
@@ -25,9 +25,9 @@ function ErrorScreen({ error }) {
 
         <div css={{ marginTop: "2rem", textAlign: "center" }}>
           <h3>Some thing went wrong!</h3>
-          <pre css={{ color: "red" }}>{error.message}</pre>
+          <pre css={{ color: "red" }}>{error.error.message}</pre>
         </div>
-        <button>
+        <button onClick={resetErrorBoundary}>
           <Link to="/">Go Home</Link>
         </button>
       </div>
