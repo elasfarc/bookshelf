@@ -5,8 +5,8 @@ import { client } from "../util/client-api";
 import * as mq from "../styles/media-queries";
 import StatusButtons from "../components/status-button";
 import { useQuery } from "react-query";
-
-const R = require("ramda");
+import Rating from "../components/rating";
+import { useUserList } from "../util/react-query/user-list";
 
 function Loading() {
   return (
@@ -21,12 +21,19 @@ function Loading() {
 
 function Book() {
   const { id: bookId } = useParams();
-  const { data, error, isIdle, isLoading, isError } = useQuery(
-    ["book-search", bookId],
-    () => client(bookId, { multiple: false })
-  );
+  const {
+    data,
+    error,
+    isIdle,
+    isLoading: isBookFetchLoading,
+    isError,
+  } = useQuery(["book", bookId], () => client(bookId, { multiple: false }));
 
-  if (isLoading || isIdle) return <Loading />;
+  const { userList, isLoading: isUserListLoading } = useUserList();
+
+  if (isIdle || isBookFetchLoading || isUserListLoading) return <Loading />;
+
+  const bookIsFinished = userList[bookId]?.finished;
   const {
     volumeInfo: {
       title,
@@ -36,10 +43,7 @@ function Book() {
       authors,
     },
   } = data;
-
-  return isError ? (
-    `${error.message}`
-  ) : (
+  return (
     <div>
       <div
         css={{
@@ -65,6 +69,7 @@ function Book() {
                 <span css={{ marginRight: 6, marginLeft: 6 }}>|</span>
                 <i>{publisher}</i>
               </div>
+              {bookIsFinished && <Rating book={{ bookId }} />}
             </div>
             <StatusButtons bookData={{ id: bookId }} />
           </div>

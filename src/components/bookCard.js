@@ -3,6 +3,8 @@ import { Card, StyledBody, StyledAction, StyledThumbnail } from "baseui/card";
 import { Button } from "baseui/button";
 import { useNavigate } from "react-router-dom";
 import StatusButtons from "./status-button";
+import Rating from "./rating";
+import { useUserList } from "../util/react-query/user-list";
 
 const PREVIEW_DESC_LENGTH = 205;
 
@@ -20,12 +22,16 @@ export default function BookCard({ bookData } = {}) {
     imageLinks: { thumbnail, smallThumbnail },
   } = bookData;
 
+  const { userList } = useUserList();
+  const bookIsFinished = userList[bookId]?.finished;
+
   const navigate = useNavigate();
 
   return (
     <div style={{ display: "flex", gap: "10px" }}>
       <Card title={title}>
         <StyledThumbnail src={thumbnail} />
+        {bookIsFinished && <Rating book={{ bookId }} />}
         <StyledBody>
           {description?.length > PREVIEW_DESC_LENGTH
             ? `${description.substring(0, 205)}...`

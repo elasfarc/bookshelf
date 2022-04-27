@@ -1,10 +1,26 @@
-import { useInfiniteQuery } from "react-query";
+import { useInfiniteQuery, useQueryClient } from "react-query";
 import { client } from "../client-api";
 
 const R = require("ramda");
 const PAGE_RESULTS_LIMIT = 9;
 
+const updateQueryCacheWithInfiniteData = R.curryN(
+  4,
+  function (queryCache, dataPath, queryKey, { pages }) {
+    for (let data of R.path(dataPath, R.last(pages)))
+      queryCache.setQueryData(
+        queryKey.reduce(
+          (acc, ele) => [...acc, ele[0] === "." ? data[ele.slice(1)] : ele],
+          []
+        ),
+        data
+      );
+  }
+);
+
 function useInfiniteSearch({ query }) {
+  const queryClient = useQueryClient();
+
   const {
     data,
     hasNextPage,
@@ -45,6 +61,11 @@ function useInfiniteSearch({ query }) {
           : null,
       staleTime: Infinity,
       enabled: R.compose(R.not, R.isEmpty, R.trim)(query),
+      onSuccess: updateQueryCacheWithInfiniteData(
+        queryClient,
+        ["items"],
+        ["book", ".id"]
+      ),
     }
   );
 
