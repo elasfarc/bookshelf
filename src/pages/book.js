@@ -27,9 +27,7 @@ function Book() {
     isIdle,
     isLoading: isBookFetchLoading,
     isError,
-  } = useQuery(["book-search", bookId], () =>
-    client(bookId, { multiple: false })
-  );
+  } = useQuery(["book", bookId], () => client(bookId, { multiple: false }));
 
   const { userList, isLoading: isUserListLoading } = useUserList();
 

@@ -9,7 +9,7 @@ const queryClient = new QueryClient({
     },
     mutations: {
       onSettled: (data, error, variables) => {
-        if (error) toaster.negative(error.message);
+        if (error) toaster.negative(error.message ?? error);
         else toaster.positive("Successfully updated");
       },
     },
