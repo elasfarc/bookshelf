@@ -2,7 +2,13 @@
 import errorImg from "./cherry.png";
 import { Link } from "react-router-dom";
 
-function ErrorScreen({ error, resetErrorBoundary }) {
+function ErrorScreen({
+  error,
+  resetErrorBoundary,
+  topErrorLevel = false,
+} = {}) {
+  const errorMessage = error.message ?? error.error.message ?? error ?? "";
+
   return (
     <div
       css={{
@@ -25,10 +31,11 @@ function ErrorScreen({ error, resetErrorBoundary }) {
 
         <div css={{ marginTop: "2rem", textAlign: "center" }}>
           <h3>Some thing went wrong!</h3>
-          <pre css={{ color: "red" }}>{error.error.message}</pre>
+          <pre css={{ color: "red" }}>{errorMessage}</pre>
         </div>
+
         <button onClick={resetErrorBoundary}>
-          <Link to="/">Go Home</Link>
+          {topErrorLevel ? null : <Link to="/">Go Home</Link>}
         </button>
       </div>
     </div>
