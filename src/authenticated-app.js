@@ -16,6 +16,7 @@ import NotFound from "./pages/404";
 import ErrorScreen from "./pages/error/error";
 
 import { usePrefetchUserList } from "./util/react-query/user-list";
+import { ToasterContainer, PLACEMENT } from "baseui/toast";
 
 const engine = new Styletron();
 
@@ -36,7 +37,12 @@ function AuthenticatedApp() {
         <div css={{ display: "flex", gap: "2rem" }}>
           <SideNavigation active={currentLocation} />
           <ErrorBoundary FallbackComponent={ErrorScreen}>
-            <AuthAppWithRoutes />
+            <ToasterContainer
+              autoHideDuration={2000}
+              placement={PLACEMENT.bottomRight}
+            >
+              <AuthAppWithRoutes />
+            </ToasterContainer>
           </ErrorBoundary>
         </div>
       </BaseProvider>

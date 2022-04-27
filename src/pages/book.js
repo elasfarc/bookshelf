@@ -7,7 +7,6 @@ import StatusButtons from "../components/status-button";
 import { useQuery } from "react-query";
 import Rating from "../components/rating";
 import { useUserList } from "../util/react-query/user-list";
-import ErrorScreen from "./error/error";
 
 function Loading() {
   return (
