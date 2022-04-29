@@ -1,24 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { UserProvider } from "./context/userContext";
-import "./firebase/config.js";
-import { ErrorBoundary as TopErrorBoundary } from "react-error-boundary";
-import ErrorScreen from "./pages/error/error";
+import AppProviders from "./AppProviders";
+import App from "./App";
 
 ReactDOM.render(
   <React.StrictMode>
-    <TopErrorBoundary
-      FallbackComponent={(error) => (
-        <ErrorScreen error={error} topErrorLevel={true} />
-      )}
-    >
-      <UserProvider>
-        <App />
-      </UserProvider>
-    </TopErrorBoundary>
+    <AppProviders>
+      <App />
+    </AppProviders>
   </React.StrictMode>,
   document.getElementById("root")
 );
