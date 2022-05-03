@@ -1,9 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import React from "react";
 import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import { BaseProvider, LightTheme } from "baseui";
-import { Provider as StyletronProvider } from "styletron-react";
-import { Client as Styletron } from "styletron-engine-atomic";
+
 import { ErrorBoundary } from "react-error-boundary";
 
 import DiscoverBooks from "./pages/discover";
@@ -16,9 +14,6 @@ import NotFound from "./pages/404";
 import ErrorScreen from "./pages/error/error";
 
 import { usePrefetchUserList } from "./util/react-query/user-list";
-import { ToasterContainer, PLACEMENT } from "baseui/toast";
-
-const engine = new Styletron();
 
 function Home() {
   const navigate = useNavigate();
@@ -31,22 +26,15 @@ function AuthenticatedApp() {
   usePrefetchUserList();
 
   return (
-    <StyletronProvider value={engine}>
-      <BaseProvider theme={LightTheme}>
-        <Header />
-        <div css={{ display: "flex", gap: "2rem" }}>
-          <SideNavigation active={currentLocation} />
-          <ErrorBoundary FallbackComponent={ErrorScreen}>
-            <ToasterContainer
-              autoHideDuration={2000}
-              placement={PLACEMENT.bottomRight}
-            >
-              <AuthAppWithRoutes />
-            </ToasterContainer>
-          </ErrorBoundary>
-        </div>
-      </BaseProvider>
-    </StyletronProvider>
+    <>
+      <Header />
+      <div css={{ display: "flex", gap: "2rem" }}>
+        <SideNavigation active={currentLocation} />
+        <ErrorBoundary FallbackComponent={ErrorScreen}>
+          <AuthAppWithRoutes />
+        </ErrorBoundary>
+      </div>
+    </>
   );
 }
 
