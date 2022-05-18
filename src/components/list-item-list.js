@@ -3,7 +3,13 @@ import { useUserList } from "../util/react-query/user-list";
 import BookList from "../components/book-list";
 import { Spinner } from "./lib";
 
-function ListItemList({ filterListItems, onNoListItems, onNoFilteredItems }) {
+function ListItemList({
+  filterListItems,
+  onNoListItems,
+  onNoFilteredItems,
+  sortOptions,
+  defaultSort,
+}) {
   const { userList, isIdle, isLoading } = useUserList();
 
   if (isIdle || isLoading)
