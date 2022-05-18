@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import ListItemList from "../components/list-item-list";
+import { finishedSortOptions, defaultSort } from "../util/sort-user-list";
 
 const FinishedScreen = () => {
   return (
@@ -20,6 +21,8 @@ const FinishedScreen = () => {
           <Link to="/discover">discover more</Link>.
         </p>
       }
+      sortOptions={finishedSortOptions}
+      defaultSort={defaultSort}
     />
   );
 };

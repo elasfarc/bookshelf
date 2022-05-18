@@ -33,7 +33,12 @@ function userListDoc(user) {
   }
   function addItem({ itemId, itemData }) {
     return update({
-      [itemId]: { itemId, added: serverTimestamp(), itemData: { ...itemData } },
+      [itemId]: {
+        itemId,
+        added: serverTimestamp(),
+        itemData: { ...itemData },
+        rating: 0,
+      },
     });
   }
   function removeItem(itemId) {
